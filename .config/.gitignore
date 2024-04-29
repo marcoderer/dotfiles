@@ -1,0 +1,17 @@
+
+# Ignore everything
+/*
+
+# Except
+
+!.gitignore
+!alacritty/
+!nvim/
+!kitty/
+!lsd/
+!picom/
+!qtile/
+!rofi/
+!starship.toml
+!btop/
+!awesome/

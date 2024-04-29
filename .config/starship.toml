@@ -1,0 +1,447 @@
+#format = """
+#[╭─user───❯](bold blue) $username
+#[┣─system─❯](bold yellow) $hostname
+#[┣─project❯](bold red) $directory$rust$git_branch$git_state$git_status$package$golang$terraform$docker_context$python$docker_context$nodejs
+#[╰─cmd────❯](bold green)
+#"""
+
+
+format = """
+[](#9A348E)\
+$os\
+$username\
+[](bg:#DA627D fg:#9A348E)\
+$directory\
+[](fg:#DA627D bg:#FCA17D)\
+$git_branch\
+$git_status\
+[](fg:#FCA17D bg:#86BBD8)\
+$c\
+$aws\
+$crystal\
+$dart\
+$elixir\
+$elm\
+$haxe\
+$julia\
+$nodejs\
+$ocaml\
+$rust\
+$golang\
+$nodejs\
+$php\
+$java\
+$kotlin\
+$haskell\
+$python\
+[](fg:#86BBD8 bg:#06969A)\
+$docker_context\
+$conda\
+[](fg:#06969A bg:#33658A)\
+$time\
+[ ](fg:#33658A)\
+"""
+# [ ](fg:#33658A)\
+# $character\
+# $line_break"""
+
+
+# the variables that you want to align to the right:
+right_format = """
+
+"""
+
+# Insert a blank line between shell prompts?
+add_newline = true
+
+
+[cmd_duration]
+min_time = 500
+format = "[ :$duration ](#06969A)"
+
+[time]
+disabled = true
+time_format = "%R" # Hour:Minute Format
+style = "bg:#33658A fg:#fbf1c7"
+format = '[  $time ]($style)'
+
+# Single or multiline prompt
+[line_break]
+disabled = true
+
+[character]
+disabled = false
+success_symbol = '[ ](bold fg:#98971a)' #green
+error_symbol = '[ ](bold fg:#cc241d)'  #red
+vimcmd_symbol = '[](bold fg:#98971a)' #green
+vimcmd_replace_one_symbol = '[](bold fg:#b16286)' #purple
+vimcmd_replace_symbol = '[](bold fg:#b16286)' #purple
+vimcmd_visual_symbol = '[](bold fg:#d79921)' #yellow
+
+[os]
+disabled = false
+style = "bg:#9A348E fg:#fbf1c7" #"bg:color_orange fg:color_fg0"
+
+[os.symbols]
+Alpaquita = " "
+Alpine = " "
+AlmaLinux = " "
+Amazon = " "
+Android = " "
+Arch = " "
+Artix = " "
+CentOS = " "
+Debian = " "
+DragonFly = " "
+Emscripten = " "
+EndeavourOS = " "
+Fedora = " "
+FreeBSD = " "
+Garuda = "󰛓 "
+Gentoo = " "
+HardenedBSD = "󰞌 "
+Illumos = "󰈸 "
+Kali = " "
+Linux = " "
+Mabox = " "
+Macos = " "
+Manjaro = " "
+Mariner = " "
+MidnightBSD = " "
+Mint = " "
+NetBSD = " "
+NixOS = " "
+OpenBSD = "󰈺 "
+openSUSE = " "
+OracleLinux = "󰌷 "
+Pop = " "
+Raspbian = " "
+Redhat = " "
+RedHatEnterprise = " "
+RockyLinux = " "
+Redox = "󰀘 "
+Solus = "󰠳 "
+SUSE = " "
+Ubuntu = " "
+Unknown = " "
+Void = " "
+Windows = "󰍲 "
+
+[username]
+show_always = true
+style_user = "bg:#9A348E  fg:#fbf1c7"
+style_root = "bg:#9A348E fg:#fbf1c7"
+format = '[$user ]($style)'
+disabled = false
+
+[directory]
+style = "bg:#DA627D fg:#fbf1c7"
+truncation_length = 3
+truncation_symbol = "…/"
+truncate_to_repo = true # truncates directory to root folder if in github repo
+read_only = "󰌾 "
+format = "[ $path ]($style)[$read_only](bg:#DA627D fg:#cc241d)"
+
+# Here is how you can shorten some long paths by text replacement
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = "󰝚 "
+"Pictures" = " "
+"Developer" = "󰲋 "
+# Keep in mind that the order matters. For example:
+# "Important Documents" = " 󰈙 "
+# will not be replaced, because "Documents" was already substituted before.
+# So either put "Important Documents" before "Documents" or use the substituted version:
+# "Important 󰈙 " = " 󰈙 "
+
+[git_branch]
+symbol = "[](bold bg:#FCA17D fg:#98971a)"
+style = "bold bg:#FCA17D fg:#fbf1c7"
+format = '[ $symbol $branch ]($style)'
+
+[git_status]
+style = "bold bg:#FCA17D fg:#cc241d"
+format = '[$all_status$ahead_behind ]($style)'
+
+[nodejs]
+symbol = ""
+style = "bold bg:#86BBD8 fg:#fbf1c7"
+format = '[ $symbol ($version) ]($style)'
+
+[c]
+symbol = " "
+style = "bg:#86BBD8 fg:#fbf1c7"
+format = '[ $symbol ($version) ]($style)'
+
+[rust]
+symbol = " "
+style = "bg:#86BBD8 fg:#fbf1c7"
+format = '[ $symbol ($version) ]($style)'
+
+[golang]
+symbol = " "
+style = "bg:#86BBD8 fg:#fbf1c7"
+format = '[ $symbol ($version) ]($style)'
+
+[php]
+symbol = " "
+style = "bg:#86BBD8 fg:#fbf1c7"
+format = '[ $symbol ($version) ]($style)'
+
+[java]
+symbol = " "
+style = "bg:#86BBD8 fg:#fbf1c7"
+format = '[ $symbol ($version) ]($style)'
+
+[kotlin]
+symbol = " "
+style = "bg:#86BBD8 fg:#fbf1c7"
+format = '[ $symbol ($version) ]($style)'
+
+[haskell]
+symbol = " "
+style = "bg:#86BBD8 fg:#fbf1c7"
+format = '[ $symbol ($version) ]($style)'
+
+[python]
+symbol = " "
+style = "bg:#86BBD8 fg:#fbf1c7"
+format = '[ $symbol ($version) ]($style)'
+
+[aws]
+symbol = "  "
+style = "bg:#86BBD8 fg:#fbf1c7"
+format = '[ $symbol ($version) ]($style)'
+
+[buf]
+symbol = " "
+style = "bg:#86BBD8 fg:#fbf1c7"
+format = '[ $symbol ($version) ]($style)'
+
+[crystal]
+symbol = " "
+style = "bg:#86BBD8 fg:#fbf1c7"
+format = '[ $symbol ($version) ]($style)'
+
+[dart]
+symbol = " "
+style = "bg:#86BBD8 fg:#fbf1c7"
+format = '[ $symbol ($version) ]($style)'
+
+[elixir]
+symbol = " "
+style = "bg:#86BBD8 fg:#fbf1c7"
+format = '[ $symbol ($version) ]($style)'
+
+[elm]
+symbol = " "
+style = "bg:#86BBD8 fg:#fbf1c7"
+format = '[ $symbol ($version) ]($style)'
+
+[fennel]
+symbol = " "
+style = "bg:#86BBD8 fg:#fbf1c7"
+format = '[ $symbol ($version) ]($style)'
+
+[fossil_branch]
+symbol = " "
+style = "bg:#86BBD8 fg:#fbf1c7"
+format = '[ $symbol ($version) ]($style)'
+
+[guix_shell]
+symbol = " "
+style = "bg:#86BBD8 fg:#fbf1c7"
+format = '[ $symbol ($version) ]($style)'
+
+[haxe]
+symbol = " "
+style = "bg:#86BBD8 fg:#fbf1c7"
+format = '[ $symbol ($version) ]($style)'
+
+[hg_branch]
+symbol = " "
+style = "bg:#86BBD8 fg:#fbf1c7"
+format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
+
+[hostname]
+ssh_symbol = " "
+style = "bg:#86BBD8 fg:#fbf1c7"
+format = '[[ $symbol( $version) ](fg:color_fg0 bg:color_blue)]($style)'
+
+[julia]
+symbol = " "
+style = "bg:#86BBD8 fg:#fbf1c7"
+format = '[ $symbol ($version) ]($style)'
+
+[lua]
+symbol = " "
+style = "bg:#86BBD8 fg:#fbf1c7"
+format = '[ $symbol ($version) ]($style)'
+
+[memory_usage]
+symbol = "󰍛 "
+
+[meson]
+symbol = "󰔷 "
+style = "bg:#86BBD8 fg:#fbf1c7"
+format = '[ $symbol ($version) ]($style)'
+
+[nim]
+symbol = "󰆥 "
+style = "bg:#86BBD8 fg:#fbf1c7"
+format = '[ $symbol ($version) ]($style)'
+
+[nix_shell]
+symbol = " "
+style = "bg:#86BBD8 fg:#fbf1c7"
+format = '[ $symbol( $version) ]($style)'
+
+[ocaml]
+symbol = " "
+style = "bg:#86BBD8 fg:#fbf1c7"
+format = '[ $symbol ($version) ]($style)'
+
+[package]
+symbol = "󰏗 "
+
+[perl]
+symbol = " "
+style = "bg:#86BBD8 fg:#fbf1c7"
+format = '[ $symbol ($version) ]($style)'
+
+
+[pijul_channel]
+symbol = " "
+style = "bg:#86BBD8 fg:#fbf1c7"
+format = '[ $symbol( $version) ]($style)'
+
+[rlang]
+symbol = "󰟔 "
+style = "bg:#86BBD8 fg:#fbf1c7"
+format = '[ $symbol ($version) ]($style)'
+
+[ruby]
+symbol = " "
+style = "bg:#86BBD8 fg:#fbf1c7"
+format = '[ $symbol ($version) ]($style)'
+
+[scala]
+symbol = " "
+style = "bg:#86BBD8 fg:#fbf1c7"
+format = '[ $symbol ($version) ]($style)'
+
+[swift]
+symbol = " "
+style = "bg:#86BBD8 fg:#fbf1c7"
+format = '[ $symbol ($version) ]($style)'
+
+[zig]
+symbol = " "
+style = "bg:#86BBD8 fg:#fbf1c7"
+format = '[ $symbol ($version) ]($style)'
+
+[docker_context]
+symbol = " "
+style = "bg:#06969A fg:#fbf1c7"
+format = '[ $symbol $context ]($style)'
+
+[conda]
+symbol = " "
+style = "bg:#06969A fg:#fbf1c7"
+format = '[ $symbol( $environment) ]($style)'
+
+
+# [git_branch]
+# format = "[ $symbol $branch(:$remote_branch)]($style)"
+# symbol = "[◬](bold bright-blue)"
+# style = "bold italic bright-blue"
+
+# [git_status]
+# style = "italic bright-blue"
+# format = """([⎪$ahead_behind$staged$modified$untracked$renamed$deleted$conflicted$stashed⎥]($style))"""
+# conflicted = "[◪◦](italic bright-magenta)"
+# ahead = "[▲│[${count}](bold white)│](italic green)"
+# behind = "[▽│[${count}](bold white)│](italic red)"
+# diverged = "[◇ ▲┤[${ahead_count}](regular white)│▽┤[${behind_count}](regular white)│](italic bright-magenta)"
+# untracked = "[◌◦](italic bright-yellow)"
+# stashed = "[◦◫◦](italic white)"
+# modified = "[●◦](italic yellow)"
+# staged = "[■┤[$count](bold white)│](italic bright-cyan)"
+# renamed = "[◎◦](italic bright-blue)"
+# deleted = "[✕](italic red)"
+
+# [git_state]
+# style =	"bold red"
+# format = "[$state( $progress_current/$progress_total) ]($style)"
+# rebase = "rebase"
+# merge = "merge"	
+# revert = "revert"	
+# cherry_pick = "cherry"
+# bisect = "bisect"	
+# am = "am"	
+# am_or_rebase = "am/rebase"
+
+
+# [sudo]
+# format = "[$symbol]($style)"
+# style = "italic bright-purple"
+# symbol = "◇┈"
+# disabled = false
+
+# [jobs]
+# format = "[ $symbol$number]($style)"
+# style = "white"
+# symbol = "[▶ ](blue italic)"
+
+# [localip]
+# ssh_only = true
+# format = " ◯[$localipv4](bold magenta)"
+# disabled = false
+
+# [battery]
+# format = "[ $percentage $symbol]($style)"
+# full_symbol = "[█](italic green)"
+# charging_symbol = "[↑](italic green)"
+# discharging_symbol = "[↓](italic)"
+# unknown_symbol = "[░](italic)"
+# empty_symbol = "[▃](italic red)"
+
+# [[battery.display]]
+# threshold = 40
+# style = "dimmed yellow"
+
+# [[battery.display]]
+# threshold = 70
+# style = "dimmed white"
+
+# [hostname]
+# ssh_only = false
+# format = "[$ssh_symbol](bold blue) on [$hostname](bold red) "
+# format = "[$hostname](bold red) "
+# trim_at = ".companyname.com"
+# disabled = true
+
+# [jobs]
+# symbol = ""
+# style = "bold red"
+# number_threshold = 1
+# format = "[$symbol]($style)"
+
+# palette = 'gruvbox_dark'
+
+# [palettes.gruvbox_dark]
+# color_fg0 = '#fbf1c7'
+# color_bg1 = '#3c3836'
+# color_bg3 = '#665c54'
+# color_blue = '#458588'
+# color_aqua = '#689d6a'
+# color_green = '#98971a'
+# color_orange = '#d65d0e'
+# color_purple = '#b16286'
+# color_red = '#cc241d'
+# color_yellow = '#d79921'
+
+
+
+

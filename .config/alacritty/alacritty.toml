@@ -1,0 +1,83 @@
+# $~/.config/alacritty/alacritty.toml
+
+live_config_reload = true
+
+[env]
+TERM = "xterm-256color"
+
+[window]
+
+dimensions = { columns = 160, lines = 50 }
+position = { x = 300, y = 80 }
+
+opacity = 0.9
+
+padding.x = 10
+padding.y = 10
+dynamic_padding = true
+decorations = "None"
+decorations_theme_variant =  "Dark"
+
+[font]
+normal = { family = "Mononiki Nerd Font Mono", style = "Regular" }
+bold_italic = { family = "Mononoki Nerd Font", style = "Italic" }
+italic = { family = "Mononoki Nerd Font", style = "Bold Italic" }
+bold = { family = "Mononoki Nerd Font", style = "Bold" }
+
+size = 10
+glyph_offset = { x = 0, y = 0 }
+
+[colors.primary]
+    background = '#11121d'
+    foreground = '#a0a8cd'
+
+[colors.normal]
+    black = '#06080a'
+    blue = '#7199ee'
+    cyan = '#38a89d'
+    green = '#95c561'
+    magenta = '#a485dd'
+    red = '#ee6d85'
+    white = '#a0a8cd'
+    yellow = '#d7a65f'
+
+[colors.bright]
+    black = '#212234'
+    blue = '#7199ee'
+    cyan = '#38a89d'
+    green = '#95c561'
+    magenta = '#a485dd'
+    red = '#ee6d85'
+    white = '#a0a8cd'
+    yellow = '#d7a65f'
+
+[colors.cursor]
+    cursor = '#a0a8cd'
+    text = '#11121d'
+
+[colors.selection]
+    background = '#11121d'
+    text = '#a0a8cd'
+
+
+[selection]
+save_to_clipboard = true
+
+[cursor]
+thickness = 0.18
+
+[mouse]
+hide_when_typing = true
+
+[keyboard]
+bindings = [
+{ key = "C", mods = "Control|Shift", action = "CopySelection" },
+{ key = "V", mods = "Control|Shift", action = "PasteSelection" },
+{ key = "Return", mods = "Control", action = "ToggleFullscreen" },
+{ key = "V", mods = "Control|Alt", action = "ToggleViMode" },
+{ key = "F", mods = "Control", action = "SearchForward" },
+{ key = "B", mods = "Control", action = "SearchBackward" },
+{ key = "O", mods = "Control", action = "Open" }, # Launch the URL below the vi mode cursor.
+]
+
+

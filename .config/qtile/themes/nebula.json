@@ -1,0 +1,106 @@
+{
+    "bg": [
+        "#2e3440",
+        "#2e3440"
+    ],
+    "bgmuted": [
+        "#3b4252",
+        "#3b4252"
+    ],
+    "bggrad": [
+        "#3b4252",
+        "#3b4252"
+    ],
+    "fg": [
+        "#d8dee9",
+        "#d8dee9"
+    ],
+    "fg-inactive": [
+        "#2e3440",
+        "#2e3440"
+    ],
+    "fg-nofocus": [
+        "#2e3440",
+        "#2e3440"
+    ],
+    "highlight": [
+        "#ebcb8b",
+        "#ebcb8b"
+    ],
+    "alert": [
+        "#bf616a",
+        "#bf616a"
+    ],
+    "border": [
+        "#2e3440",
+        "#2e3440"
+    ],
+    "border-active": [
+        "#88c0d0",
+        "#88c0d0"
+    ],
+    "menu-bg": [
+        "#2e3440",
+        "#2e3440"
+    ],
+    "menu-sel": [
+        "#3b4252",
+        "#3b4252"
+    ],
+    "menu-hl": [
+        "#ebcb8b",
+        "#ebcb8b"
+    ],
+    "ansi0": [
+        "#3b4252",
+        "#3b4252"
+    ],
+    "ansi1": [
+        "#bf616a",
+        "#bf616a"
+    ],
+    "ansi2": [
+        "#a3be8c",
+        "#a3be8c"
+    ],
+    "ansi3": [
+        "#ebcb8b",
+        "#ebcb8b"
+    ],
+    "ansi4": [
+        "#81a1c1",
+        "#81a1c1"
+    ],
+    "ansi5": [
+        "#b48ead",
+        "#b48ead"
+    ],
+    "ansi6": [
+        "#88c0d0",
+        "#88c0d0"
+    ],
+    "ansi7": [
+        "#e5e9f0",
+        "#e5e9f0"
+    ],
+    "extrablue": [
+        "#5e81ac",
+        "#5e81ac"
+    ],
+    "extragrey": [
+        "#4c566a",
+        "#4c566a"
+    ],
+    "extraorange": [
+        "#d08770",
+        "#d08770"
+    ],
+    "extradark": [
+        "#242831",
+        "#242831"
+    ],
+    "extracyan": [
+        "#8fbcbb",
+        "#8fbcbb"
+    ]
+}

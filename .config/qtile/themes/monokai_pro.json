@@ -1,0 +1,86 @@
+{
+    "bg": [
+        "#2D2A2E",
+        "#2D2A2E"
+    ],
+    "bgmuted": [
+        "#403E41",
+        "#403E41"
+    ],
+    "bggrad": [
+        "#403E41",
+        "#403E41"
+    ],
+    "fg": [
+        "#FCFCFA",
+        "#FCFCFA"
+    ],
+    "fg-inactive": [
+        "#2D2A2E",
+        "#2D2A2E"
+    ],
+    "fg-nofocus": [
+        "#2D2A2E",
+        "#2D2A2E"
+    ],
+    "highlight": [
+        "#FFD866",
+        "#FFD866"
+    ],
+    "alert": [
+        "#FF6188",
+        "#FF6188"
+    ],
+    "border": [
+        "#2D2A2E",
+        "#2D2A2E"
+    ],
+    "border-active": [
+        "#78DCE8",
+        "#78DCE8"
+    ],
+    "menu-bg": [
+        "#2D2A2E",
+        "#2D2A2E"
+    ],
+    "menu-sel": [
+        "#403E41",
+        "#403E41"
+    ],
+    "menu-hl": [
+        "#FFD866",
+        "#FFD866"
+    ],
+    "ansi0": [
+        "#403E41",
+        "#403E41"
+    ],
+    "ansi1": [
+        "#FF6188",
+        "#FF6188"
+    ],
+    "ansi2": [
+        "#A9DC76",
+        "#A9DC76"
+    ],
+    "ansi3": [
+        "#FFD866",
+        "#FFD866"
+    ],
+    "ansi4": [
+        "#FC9867",
+        "#FC9867"
+    ],
+    "ansi5": [
+        "#AB9DF2",
+        "#AB9DF2"
+    ],
+    "ansi6": [
+        "#78DCE8",
+        "#78DCE8"
+    ],
+    "ansi7": [
+        "#FCFCFA",
+        "#FCFCFA"
+    ]
+}
