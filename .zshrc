@@ -53,17 +53,14 @@ export PATH="$DENO_INSTALL/bin:$PATH"
 export EDITOR=nvim
 export VISUAL="$EDITOR"
 export PATH="$PATH:/home/marco/.local/kitty.app/bin"
-
 # ===>> Aliases <<===
 
 # cd shorthands
-alias dc="cd ~/.config/"
-alias cdh="cd ~/"
 alias mkcd='foo(){ mkdir -p "$1"; cd "$1" }; foo ' # mkdir and cd into it
 alias cddl='cd ~/Downloads/'
 alias cddt='cd ~/Desktop/'
 alias cdcf='cd ~/.config/'
-alias cdh='cd ~'
+alias cdlb='cd ~/.local/bin/'
 alias -g ...='../..'
 alias -g ....='../../..'
 alias -g .....='../../../..'

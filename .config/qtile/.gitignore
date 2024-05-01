@@ -1,2 +1,2 @@
 **/__pycache__
-**/_to_migrate
+.mypy_cache/

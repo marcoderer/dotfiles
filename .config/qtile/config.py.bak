@@ -1,21 +1,17 @@
-#  ╭──────────────────────────╮  #
-#  │   ____ ___ _ _    ____   │  #
-#  │   |  |  |  | |    |___   │  #
-#  │   |_\|  |  | |___ |___   │  #
-#  │                          │  #
-#  ╰──────────────────────────╯  #
-#   ===== CONFIGURATION ======   #
 
-import subprocess
 import os
-from libqtile import bar, layout, qtile, widget, hook
+import subprocess
+import psutil
+from libqtile import bar, layout, widget, hook, qtile
 from libqtile.config import Click, Drag, Group, Key, Match, Screen, KeyChord
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
+# from libqtile.command import lazy
 from qtile_extras import widget
 from qtile_extras.widget.decorations import RectDecoration 
 
 mod = "mod4"
+
 scrot = "home/marco/Pictures/Screenshots/%Y-%m-%d-%H%M%S.png"
 terminal = "kitty"
 file_browser = "thunar"
@@ -77,7 +73,13 @@ keys = [Key(key[0], key[1], *key[2:]) for key in [
     ([mod, "control"], "q", lazy.shutdown()),
 
     # Spawn command using a prompt widget
-    # ([mod], "r", lazy.spawncmd()),
+    ([mod], "r", lazy.spawncmd()),
+
+    # Show applications menu
+    ([mod], "m", lazy.spawn("rofi -show drun")),
+
+    # Window Nav
+    ([mod, "shift"], "m", lazy.spawn("rofi -show")),
 
     # Browser
     ([mod], "b", lazy.spawn(browser)),
@@ -115,29 +117,6 @@ keys.extend(
             ]],
             name = 'Screenshot mode'
         ),
-        # Rofi 
-    KeyChord([mod], "r", [
-            Key(key[0], key[1], *key[2:]) for key in [
-                ([], "a", lazy.spawn(
-                    "rofi -show drun"
-                )),
-                ([], "w", lazy.spawn(
-                    "rofi -show window"
-                )),
-                ([], "k", lazy.spawn(
-                    "rofi -show keys"
-                )),
-                ([], "l", lazy.spawn(
-                    "rofi -show windows"
-                )),
-                ([], "r", lazy.spawncmd()),
-                ([], "p", lazy.spawn(
-                    "rofi -show drun " # "rofi -show drun"
-                )),
-            ]],
-            mode = True,
-            name = 'Adjust Volume'
-        ),
         # Volume
         KeyChord([mod], "v", [
             # dependencies: pulseaudio-utils
@@ -158,52 +137,64 @@ keys.extend(
     ]
 )
 
-g_bindings= [
-    "ampersand", 
-    "eacute", 
-    "quotedbl", 
-    "apostrophe", 
-    "parenleft", 
-    "section", 
-    "grave", 
-    "exclam", 
-    "cedilla",
-]
+groups = []
+group_names = ["1", "2", "3", "4", "5", "6", "7", "8", "9",]
 
 # group labels turn into icons with Awesome Font
 # see:https://fontawesome.com/search?o=r&m=free&s=solid&f=classic
-groups = [
-    Group("1", label="HOME", layout="monadtall"),
-    Group("2", matches=[Match(wm_class=["firefox"])], label="globe", layout="monadtall"),
-    Group("3", matches=[Match(title=["nvim"])], label="code", layout="monadtall"),
-    Group("4", matches=[Match(wm_class=["kitty"])], label="terminal", layout="monadtall"),
-    Group("5", matches=[Match(wm_class=["thunar"])], label="folder-open", layout="monadtall"),
-    Group("6", matches=[Match(wm_class=["VirtualBox Manager"])], label="cubes", layout="monadtall"),
-    Group("7", matches=[Match(wm_class=["whatsapp-for-linux"])], label="comments", layout="monadtall"),
-    Group("8", matches=[Match(wm_class=["thunderbird"])], label="envelope", layout="monadtall"),
-    Group("9", matches=[Match(wm_class=["spotify"])], label="music", layout="monadtall"),
-]
+group_labels = ["HOME", "globe", "code", "folder-open", "envelope", "terminal", "cubes", "comments", "music",]
 
-for i, group in enumerate(groups):
-  keys.extend([
-      # switch to group  
-      Key([mod],
-          g_bindings[i],
-          lazy.group[group.name].toscreen()),
-      # switch to & move focused window to group
-      Key([mod, "shift"],
-          g_bindings[i],
-          lazy.window.togroup(group.name, switch_group=True))
-    ])
+group_layouts = ["monadtall", "monadtall", "tile", "tile", "monadtall", "monadtall", "monadtall", "monadtall", "monadtall"]
 
+for i in range(len(group_names)):
+    groups.append(
+        Group(
+            name=group_names[i],
+            layout=group_layouts[i].lower(),
+            label=group_labels[i],
+        ))
+# groups = [
+#     Group("1", label="HOME", layout="monadtall"),
+#     Group("2", label="globe", layout="monadtall"),
+#     Group("3", label="code", layout="monadtall"),
+#     Group("4", label="terminal", layout="monadtall"),
+#     Group("5", label="folder-open", layout="monadtall"),
+#     Group("6", label="cubes", layout="monadtall"),
+#     Group("7", label="comments", layout="monadtall"),
+#     Group("8", label="envelope", layout="monadtall"),
+#     Group("9", label="music", layout="monadtall"),
+# ]
+
+for i in groups:
+    keys.extend(
+        [
+            # mod + group number = switch to group
+            Key(
+                [mod],
+                i.name,
+                lazy.group[i.name].toscreen(),
+                desc="Switch to group {}".format(i.name),
+            ),
+            # mod + shift + group number = switch to & move focused window to group
+            Key(
+                [mod, "shift"],
+                i.name,
+                lazy.window.togroup(i.name, switch_group=True),
+                desc="Switch to & move focused window to group {}".format(i.name),
+            ),
+            # Or, use below if you prefer not to switch to that group.
+            # mod + ctrl + group number = move focused window to group
+            Key([mod, "control"], i.name, lazy.window.togroup(i.name),
+                desc="move focused window to group {}".format(i.name)),
+        ]
+    )
 
 
 layout_theme = {
     "border_width":1,
-    "margin": 6,
+    "margin":15,
     "border_focus":"#a6e3a1",
     "border_normal":"#45475a",
-    "grow_amount" : 5,
 }
 
 layouts = [ 
@@ -242,62 +233,117 @@ widget_defaults = dict(
 )
 extension_defaults = widget_defaults.copy()
 
-primary_widgets = [
-    widget.CurrentLayoutIcon(
-        padding = 4,
-        scale = 0.7,
-        foreground = "#cdd6f4",
-        background = "#1e1e2e"
-    ),
-    widget.Sep(
+
+def base(fg="#45475a", bg="#1e1e2e"): 
+    return {
+        "foreground": fg,
+        "background": bg,
+    }
+
+def separator():
+    return widget.Sep(
+        **base(),
         linewidth = 1,
         padding = 5,
-        foreground = "#45475a",
-        background = "#1e1e2e"
     ),
-    widget.GroupBox(
-        font = "Font Awesome 6 Free Solid",
-        fontsize = 14,
+
+def icon(
+        text="?", 
+        mouse_callbacks=None):
+    return widget.TextBox(
+        **base(fg="#708ed8"),
+        text=text,
+        font="Font Awesome 6 Free Solid",
+        fontsize=17,
+        padding=10
+    )
+
+def workspaces(): 
+    return widget.GroupBox(
+        **base(),
+        font="Font Awesome 6 Free Solid",
+        fontsize = 12,
         margin_y = 2,
-        margin_x = 10,
+        margin_x = 3,
         padding_y = 2,
-        padding_x = 3,
+        padding_x = 8,
         borderwidth = 0,
-        disable_drag = True,
+        disable_drag = False,
         active = "#6c7086",
         inactive = "#313244",
         rounded = False,
         highlight_method = "text",
         this_current_screen_border = "#cdd6f4",
-        foreground = "#45475a",
-        background = "#1e1e2e"
-    ),
-    widget.Sep(
-        linewidth = 1,
-        padding = 5,
-        foreground = "#45475a",
-        background = "#1e1e2e"
-    ),
-    widget.Prompt(
-        font = "Jetbrains Mono Nerd Font Bold",
-        fontsize = 12,
-        background = "#1e1e2e",
-        foreground = "#cdd6f4"
-    ),
-    widget.Spacer(background = "#1e1e2e"),
-    widget.WindowName(
+    )
+
+def spacer():
+    return widget.Spacer(background="#1e1e2e")
+
+def windowname():
+    return widget.WindowName(
         font = "Jetbrains Mono Nerd Font Bold",
         fontsize = 12,
         foreground = "#cdd6f4",
         background = "#1e1e2e"
-    ),
-    widget.Spacer(background = "#1e1e2e"),
-    widget.Sep(
-        linewidth = 1,
-        padding = 5,
-        foreground = "#45475a",
+    )
+
+def date():
+    return widget.Clock(
+        foreground = "#181825",
+        background = "#1e1e2e",
+        font = "Jetbrains Mono Nerd Font Bold",
+        fontsize = 12,
+        format = "%d/%m/%y",
+        decorations = [
+            RectDecoration (
+                colour = "#a6e3a1",
+                padding_y = 3,
+                radius = 2,
+                filled = True
+            ),
+        ],
+    )
+
+def time():
+    return widget.Clock(
+        foreground = "#181825",
+        background = "#1e1e2e",
+        font = "Jetbrains Mono Nerd Font Bold",
+        fontsize = 12,
+        format = "%H:%M:%S",
+        decorations = [
+            RectDecoration (
+                colour = "#89b4fa",
+                padding_y = 3,
+                radius = 2,
+                filled = True
+            ),
+        ],
+    )
+
+def current_layout():
+    return widget.CurrentLayoutIcon(
+        padding = 4,
+        scale = 0.7,
+        foreground = "#cdd6f4",
         background = "#1e1e2e"
+    )
+
+primary_widgets = [
+    separator(),
+    current_layout(),
+    separator(),
+    workspaces(),
+    separator(),
+    widget.Prompt(
+        font = "Jetbrains Mono Nerd Font",
+        fontsize = 12,
+        background = "#1e1e2e",
+        foreground = "#cdd6f4"
     ),
+    spacer(),
+    windowname(),
+    separator(),
     widget.CPU(
         background = "#1e1e2e",
         foreground = "#181825",
@@ -311,12 +357,7 @@ primary_widgets = [
                 filled = True
             ),
         ],),
-    widget.Sep(
-        linewidth = 1,
-        padding = 5,
-        foreground = "4c566a",
-        background = "#1e1e2e"
-    ),
+    separator(),
     widget.Memory(
         measure_mem = 'G',
         foreground = "#181825",
@@ -332,169 +373,33 @@ primary_widgets = [
                 filled = True
             ),
         ],),
-    widget.Sep(
-        linewidth = 1,
-        padding = 5,
-        foreground = "#45475a",
-        background = "#1e1e2e"
-    ),
-    widget.Clock(
-        foreground = "#181825",
-        background = "#1e1e2e",
-        font = "Jetbrains Mono Nerd Font Bold",
-        fontsize = 12,
-        format = "%d %B %y",
-        decorations = [
-            RectDecoration (
-                colour = "#a6e3a1",
-                padding_y = 3,
-                radius = 2,
-                filled = True
-            ),
-        ],),
-    widget.Sep(
-        linewidth = 1,
-        padding = 5,
-        foreground = "4c566a",
-        background = "#1e1e2e"
-    ),
-
-    widget.Clock(
-        foreground = "#181825",
-        background = "#1e1e2e",
-        font = "Jetbrains Mono Nerd Font Bold",
-        fontsize = 12,
-        format = "%H:%M:%S",
-        decorations = [
-            RectDecoration (
-                colour = "#89b4fa",
-                padding_y = 3,
-                radius = 2,
-                filled = True
-            ),
-        ],),
-
-    widget.Sep(
-        linewidth = 1,
-        padding = 5,
-        foreground = "#45475a",
-        background = "#1e1e2e"
-    ),
+    separator(),
+    date(),
+    separator(),
+    time(),
+    separator(),
     widget.Systray(
         background = "#1e1e2e",
         icon_size = 20,
         padding = 5,
     ),
-    widget.Sep(
-        linewidth = 1,
-        padding = 5,
-        foreground = "#45475a",
-        background = "#1e1e2e"
-    ),
-    widget.TextBox(
-        foreground = "#708ed8",
-        background = "#1e1e2e",
-        text="⏻",
-        font="Font Awesome 6 Free Solid",
-        fontsize=17,
-        padding=10,
-        # mouse_callbacks = {"Button1": open_powermenu()}
-    )
-
+    separator(),
+    icon(text="⏻"), #, mouse_callbacks={"Button1": open_powermenu()}),
 ]
+
 secondary_widgets = [
-    
-    widget.CurrentLayoutIcon(
-        padding = 4,
-        scale = 0.7,
-        foreground = "#cdd6f4",
-        background = "#1e1e2e"
-    ),
-    widget.Sep(
-        linewidth = 1,
-        padding = 5,
-        foreground = "#45475a",
-        background = "#1e1e2e"
-    ),
-    widget.GroupBox(
-        font = "Font Awesome 6 Free Solid",
-        fontsize = 14,
-        margin_y = 2,
-        margin_x = 12,
-        padding_y = 2,
-        padding_x = 3,
-        borderwidth = 0,
-        disable_drag = True,
-        active = "#6c7086",
-        inactive = "#313244",
-        rounded = False,
-        highlight_method = "text",
-        this_current_screen_border = "#cdd6f4",
-        foreground = "#45475a",
-        background = "#1e1e2e"
-    ),
-    widget.Sep(
-        linewidth = 1,
-        padding = 5,
-        foreground = "#45475a",
-        background = "#1e1e2e"
-    ),
-    widget.Spacer(background = "#1e1e2e"),
-    widget.WindowName(
-        font = "Jetbrains Mono Nerd Font Bold",
-        fontsize = 12,
-        foreground = "#cdd6f4",
-        background = "#1e1e2e"
-    ),
-    widget.Spacer(background = "#1e1e2e"),
-    widget.Sep(
-        linewidth = 1,
-        padding = 5,
-        foreground = "#45475a",
-        background = "#1e1e2e"
-    ),
-    widget.Clock(
-        foreground = "#181825",
-        background = "#1e1e2e",
-        font = "Jetbrains Mono Nerd Font Bold",
-        fontsize = 12,
-        format = "%d %B %y",
-        decorations = [
-            RectDecoration (
-                colour = "#a6e3a1",
-                padding_y = 3,
-                radius = 2,
-                filled = True
-            ),
-        ],),
-    widget.Sep(
-        linewidth = 1,
-        padding = 5,
-        foreground = "4c566a",
-        background = "#1e1e2e"
-    ),
-
-    widget.Clock(
-        foreground = "#181825",
-        background = "#1e1e2e",
-        font = "Jetbrains Mono Nerd Font Bold",
-        fontsize = 12,
-        format = "%H:%M:%S",
-        decorations = [
-            RectDecoration (
-                colour = "#89b4fa",
-                padding_y = 3,
-                radius = 2,
-                filled = True
-            ),
-        ],),
-
-    widget.Sep(
-        linewidth = 1,
-        padding = 5,
-        foreground = "#45475a",
-        background = "#1e1e2e"
-    ),
+    separator(),
+    current_layout(),
+    separator(),
+    workspaces(),
+    separator(),
+    spacer(),
+    windowname(),
+    separator(),
+    date(),
+    separator(),
+    time(),
+    separator(),
 ]
 
 def count_monitors():
@@ -517,7 +422,7 @@ def count_monitors():
     return connected_monitors
 
 def status_bar(widgets):
-    return bar.Bar(widgets, 28, margin = [3,3,0,3], opacity=0.75)
+    return bar.Bar(widgets, 28, opacity=0.75)
 
 screens = [
     Screen(
@@ -534,12 +439,20 @@ if monitors > 1:
             )
         )
 
-
-# Drag floating layouts.
 mouse = [
-    Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
-    Drag([mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
-    Click([mod], "Button2", lazy.window.bring_to_front()),
+    Drag(
+        [mod],
+        "Button1",
+        lazy.window.set_position_floating(),
+        start=lazy.window.get_position()
+    ),
+    Drag(
+        [mod],
+        "Button3",
+        lazy.window.set_size_floating(),
+        start=lazy.window.get_size()
+    ),
+    Click([mod], "Button2", lazy.window.bring_to_front())
 ]
 
 dgroups_key_binder = None
@@ -548,18 +461,6 @@ follow_mouse_focus = True
 bring_front_click = False
 floats_kept_above = True
 cursor_warp = False
-floating_layout = layout.Floating(
-    float_rules=[
-        # Run the utility of `xprop` to see the wm class and name of an X client.
-        *layout.Floating.default_float_rules,
-        Match(wm_class="confirmreset"),  # gitk
-        Match(wm_class="makebranch"),  # gitk
-        Match(wm_class="maketag"),  # gitk
-        Match(wm_class="ssh-askpass"),  # ssh-askpass
-        Match(title="branchdialog"),  # gitk
-        Match(title="pinentry"),  # GPG key password entry
-    ]
-)
 auto_fullscreen = True
 focus_on_window_activation = "smart"
 reconfigure_screens = True
@@ -570,11 +471,6 @@ auto_minimize = True
 
 # When using the Wayland backend, this can be used to configure input devices.
 wl_input_rules = None
-@hook.subscribe.startup_once
-def start_once():
-    home = os.path.expanduser('~')
-    subprocess.call([home + '/.config/qtile/autostart.sh'])
-
 
 # XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this
 # string besides java UI toolkits; you can see several discussions on the
