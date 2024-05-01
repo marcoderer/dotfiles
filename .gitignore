@@ -1,6 +1,6 @@
 # Ignore everything
 /*
-
+*.bak
 # Except
 
 !.gitignore
@@ -10,5 +10,7 @@
 !.bashrc
 !.p10k.zsh
 !.zshrc
+
+
 
 
