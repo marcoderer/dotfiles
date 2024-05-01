@@ -5,7 +5,7 @@
 
 !.gitignore
 !.config/
-!.local/bin
+!.local/
 !.archinstall/
 !.bashrc
 !.p10k.zsh
