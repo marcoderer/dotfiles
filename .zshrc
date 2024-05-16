@@ -1,6 +1,12 @@
-#######################
-### OH MY ZSH SETUP ###
-#######################
+#                             88
+#                             88
+#                             88
+#       888888888  ,adPPYba,  88,dPPYba,   8b,dPPYba,   ,adPPYba,
+#            a8P"  I8[    ""  88P'    "8a  88P'   "Y8  a8"     ""
+#         ,d8P'     `"Y8ba,   88       88  88          8b
+#  888  ,d8"       aa    ]8I  88       88  88          "8a,   ,aa
+#  888  888888888  `"YbbdP"'  88       88  88           `"Ybbd8"'
+#
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -9,9 +15,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$PATH
-export PATH=$HOME/.local/bin:$PATH
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -44,7 +47,7 @@ source $ZSH/oh-my-zsh.sh
 ##########################
 
 # Sourcing
-source /home/marco/dev/shell/utils.sh
+# source /home/marco/dev/shell/utils.sh
 
 # exports for deno runtime
 export DENO_INSTALL="/home/marco/.deno"
@@ -52,7 +55,13 @@ export PATH="$DENO_INSTALL/bin:$PATH"
 # export MANPATH="/usr/local/man:$MANPATH"
 export EDITOR=nvim
 export VISUAL="$EDITOR"
+# Add to PATH:
+export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/.local/bin:$PATH
+export PATH=/opt/nvim-linux64/bin:$PATH
 export PATH="$PATH:/home/marco/.local/kitty.app/bin"
+export XDG_DATA_DIRS="/var/lib/snapd/desktop:$XDG_DATA_DIRS"
+
 # ===>> Aliases <<===
 
 # cd shorthands
@@ -61,6 +70,7 @@ alias cddl='cd ~/Downloads/'
 alias cddt='cd ~/Desktop/'
 alias cdcf='cd ~/.config/'
 alias cdlb='cd ~/.local/bin/'
+alias cdls='cd ~/.local/src/'
 alias -g ...='../..'
 alias -g ....='../../..'
 alias -g .....='../../../..'
@@ -77,29 +87,22 @@ alias 8='cd -8'
 alias 9='cd -9'
 
 # Dir history
-function d () {
-  if [[ -n $1 ]]; then
-    dirs "$@"
-  else
-    dirs -v | head -n 10
-  fi
-}
-compdef _dirs d
+# function d () {
+#   if [[ -n $1 ]]; then
+#     dirs "$@"
+#   else
+#     dirs -v | head -n 10
+#   fi
+# }
+# compdef _dirs d
 
 # List directory contents
 alias la='ls -A'
 alias ll='ls -lh'
 alias lla='ls -lAh'
 
-# dotgit: aliases for git actions on bare .dotfiles repo
-alias dg="git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME"
-alias dga="dg add"
-alias dgc="dg commit -vm"
-alias dgca="dg commit -avm"
-alias dgp="dg push"
-alias dgs="dg status"
-alias gz="dga ~/.zshrc && dgc ~/.zshrc && dgp"
-alias ga="dga ~/.config/alacritty/alacritty.toml && dgc  ~/.config/alacritty/alacritty.toml && dgp"
+# Install package with nala
+alias install="sudo nala install"
 
 # edit and reload dotfiles
 alias et="nvim ~/.tmux.conf"
@@ -117,7 +120,7 @@ alias ls="lsd"
 alias bat='batcat'
 
 # other
-alias colors="for i in {0..255}; do print -Pn "%K{$i}  %k%F{$i}${(l:3::0:)i}%f " ${${(M)$((i%6)):#3}:+$'\n'}; done"
+alias colors="for i in {0..255}; do print -Pn '%K{$i}  %k%F{$i}${(l:3::0:)i}%f ' ${${(M)$((i%6)):#3}:+$'\n'}; done"
 alias myip="curl http://ipecho.net/plain; echo"
 alias tpl="powerlevel10k_plugin_unload; PS1='>> '"
 

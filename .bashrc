@@ -1,3 +1,12 @@
+#       88                                  88
+#       88                                  88
+#       88                                  88
+#       88,dPPYba,   ,adPPYYba,  ,adPPYba,  88,dPPYba,   8b,dPPYba,   ,adPPYba,
+#       88P'    "8a  ""     `Y8  I8[    ""  88P'    "8a  88P'   "Y8  a8"     ""
+#       88       d8  ,adPPPPP88   `"Y8ba,   88       88  88          8b
+#  888  88b,   ,a8"  88,    ,88  aa    ]8I  88       88  88          "8a,   ,aa
+#  888  8Y"Ybbd8"'   `"8bbdP"Y8  `"YbbdP"'  88       88  88           `"Ybbd8"'
+
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -114,5 +123,8 @@ if ! shopt -oq posix; then
 		. /etc/bash_completion
 	fi
 fi
-export PATH="/home/marco/.local/bin:$PATH"
+export PATH="$PATH:/home/marco/.local/bin"
+export PATH="$PATH:/opt/nvim-linux64/bin"
+export XDG_DATA_DIRS="/var/lib/snapd/desktop:$XDG_DATA_DIRS"
+
 . "$HOME/.cargo/env"

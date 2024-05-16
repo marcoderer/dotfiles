@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# 1. Get current python version
+pyversys=""
+syspy() {
+	local vertuple=python -c 'import sys; print(sys.version_info[:])'
+	pyversys="python${vertuple[0]}.${vertuple[1]}"
+}
+
+# 2. Fetch user input
+read -p 'Project name: ' projname
+read -p 'Python version (Leave blank for system default): ' pyvercust
+pyver="${pyvercust:-${pyversys}}"
+
+# 3. Initialize project with pdm
+mkdir -p "${projname}"
+cd "${projname}" || exit
+
+pdm init --python "${pyver}" --lib --non-interactive
+
+# 4. Create some files not created by pdm
+
+touch src/main.py
+
+# 5. Initialize git
+git init
+git add .
+git commit -m "First commit"

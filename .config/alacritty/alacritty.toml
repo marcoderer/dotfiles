@@ -19,7 +19,7 @@ decorations = "None"
 decorations_theme_variant =  "Dark"
 
 [font]
-normal = { family = "Mononiki Nerd Font Mono", style = "Regular" }
+normal = { family = "Mononoki Nerd Font Mono", style = "Regular" }
 bold_italic = { family = "Mononoki Nerd Font", style = "Italic" }
 italic = { family = "Mononoki Nerd Font", style = "Bold Italic" }
 bold = { family = "Mononoki Nerd Font", style = "Bold" }

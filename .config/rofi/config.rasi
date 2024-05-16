@@ -3,9 +3,10 @@ configuration {
   display-window: "Windows:";
   drun-display-format: "{icon} {name}";
   font: "JetBrainsMono NF Medium 10";
-  modi: "window,run,drun";
+  modi: "window,run,drun,clipboard:greenclip print";
   show-icons: true;
-  icon-theme: "Papirus";	
+  icon-theme: "Papirus";
+  matching: "fuzzy";
   timeout {
       action: "kb-cancel";
       delay:  0;
